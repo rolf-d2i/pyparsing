@@ -605,6 +605,12 @@ def playGame(p, startRoom):
     while not p.gameOver:
         cmdstr = input(">> ")
         cmd = parser.parseCmd(cmdstr)
+        #returns ParseResult in future versions which breaks this code
+        if(cmd.__class__.__name__ in ["ParseResults","parse_results"]): #or whatever else parse result will be called
+            class outc():
+                def __init__(self,cmd):
+                   self.command = cmd.asList()[0]
+            cmd = outc(cmd)        
         if cmd is not None:
             cmd.command(p)
     print()
